@@ -53,7 +53,7 @@ GEM
     molinillo (0.4.0)
     motion-cocoapods (1.7.7)
       cocoapods (>= 0.34)
-    motion-locman (0.2.2)
+    motion-locman (0.3.0)
     nap (1.0.0)
     netrc (0.7.8)
     parser (2.2.3.0)
@@ -87,7 +87,7 @@ DEPENDENCIES
   dotenv (~> 2.0)
   ib
   motion-cocoapods
-  motion-locman (~> 0.2.2)
+  motion-locman (~> 0.3)
   rake
   rubocop
 
