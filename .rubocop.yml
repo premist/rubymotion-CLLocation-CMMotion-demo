@@ -1,0 +1,29 @@
+Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/MethodName:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/DuplicateMethods:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 25
+
+Style/MultilineOperationIndentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
