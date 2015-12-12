@@ -7,14 +7,21 @@ class LocationsController < UIViewController
       start! if authorized
     end
 
-    manager.on_update = lambda { |locations| update_locations(locations) }
-    manager.on_visit = lambda { |locations| update_visit(visit) }
+    manager.on_update = lambda do |locations|
+      RavenClient.sharedClient.captureMessage("Received locations event")
+      update_locations(locations)
+    end
 
-    if manager.authorized?
-      start!
-    else
+    manager.on_visit = lambda do |visit|
+      RavenClient.sharedClient.captureMessage("Received on_visit event")
+      update_visit(visit)
+    end
+
+    unless manager.authorized?
       manager.authorize!
     end
+
+    start!
   end
 
   def start!
@@ -47,8 +54,8 @@ class LocationsController < UIViewController
             .setValue(
               latitude: visit.latitude,
               longitude: visit.longitude,
-              departed_at: location.departed_at.to_i,
-              arrived_at: location.arrived_at.to_i,
+              departed_at: visit.departed_at.to_i,
+              arrived_at: visit.arrived_at.to_i,
               created_at: Time.now.to_i
             )
   end
@@ -62,7 +69,7 @@ class LocationsController < UIViewController
   def manager
     @manager ||= Locman::Manager.new(
       background: true,
-      distance_filter: 50
+      distance_filter: 20
     )
   end
 end
