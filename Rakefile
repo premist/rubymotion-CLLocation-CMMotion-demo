@@ -19,6 +19,7 @@ Motion::Project::App.setup do |app|
 
   app.pods do
     pod "Firebase"
+    pod "Raven"
   end
 
   app.provisioning_profile = ENV["PROVISIONING_PROFILE"]
