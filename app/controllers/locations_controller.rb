@@ -26,6 +26,7 @@ class LocationsController < UIViewController
 
   def start!
     # manager.start!
+    manager.update!
     manager.update_significant!
     manager.update_visits!
   end
@@ -33,7 +34,7 @@ class LocationsController < UIViewController
   def update_locations(locations)
     locations.each do |location|
       firebase.childByAppendingPath(UIDevice.currentDevice.name)
-              .childByAppendingPath("locations")
+              .childByAppendingPath("locations_always")
               .childByAutoId.setValue(
                 latitude: location.latitude,
                 longitude: location.longitude,
