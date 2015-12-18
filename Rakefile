@@ -25,9 +25,9 @@ Motion::Project::App.setup do |app|
   app.provisioning_profile = ENV["PROVISIONING_PROFILE"]
   app.codesign_certificate = ENV["CODESIGN_CERTIFICATE"]
 
-  app.info_plist["NSLocationAlwaysUsageDescription"] = "We would like to sell your location data to Google."
-  app.info_plist["NSLocationWhenInUseUsageDescription"] = "We would like to sell your location data to Google."
-  app.info_plist["NSMotionUsageDescription"] = "We would like to sell your motion data to Xiaomi."
+  app.info_plist["NSLocationAlwaysUsageDescription"] = "We would like to use your location data."
+  app.info_plist["NSLocationWhenInUseUsageDescription"] = "We would like to use your location data."
+  app.info_plist["NSMotionUsageDescription"] = "We would like to use your motion data."
   app.info_plist["UIBackgroundModes"] = ["location"]
 
   # Load environment variables
