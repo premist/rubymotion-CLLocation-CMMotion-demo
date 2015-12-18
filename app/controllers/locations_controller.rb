@@ -22,6 +22,13 @@ class LocationsController < UIViewController
     end
 
     start!
+
+    motion_manager.on_motion = lambda do |motion|
+      RavenClient.sharedClient.captureMessage("Received on_motion event")
+      update_motion(motion)
+    end
+
+    motion_manager.update!
   end
 
   def start!
@@ -48,6 +55,18 @@ class LocationsController < UIViewController
     end
   end
 
+  def update_motion(motion)
+    firebase.childByAppendingPath(UIDevice.currentDevice.name)
+            .childByAppendingPath("motions")
+            .childByAutoId
+            .setValue(
+              types: motion.types,
+              confidence: motion.confidence,
+              at: motion.at.to_i,
+              created_at: Time.now.to_i
+            )
+  end
+
   def update_visit(visit)
     firebase.childByAppendingPath(UIDevice.currentDevice.name)
             .childByAppendingPath("visits")
@@ -72,5 +91,9 @@ class LocationsController < UIViewController
       background: true,
       distance_filter: 20
     )
+  end
+
+  def motion_manager
+    @motion_manager ||= Momo::Manager.new
   end
 end

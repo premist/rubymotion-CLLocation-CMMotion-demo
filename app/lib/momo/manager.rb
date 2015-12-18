@@ -2,7 +2,7 @@ module Momo
   class Manager
     attr_accessor :on_motion
 
-    def initialize
+    def initialize(params = {})
       params.each { |key, value| send("#{key}=", value) }
       self
     end
@@ -12,14 +12,19 @@ module Momo
       @on_motion = on_motion
     end
 
+    def available?
+      CMMotionActivityManager.isActivityAvailable
+    end
+
     def update!
-      manager.startActivityUpdatesToQueue(queue, withHandler: handle_activity)
+      return false unless available?
+      manager.startActivityUpdatesToQueue(queue, withHandler: lambda { |a| handle_activity(a) })
     end
 
     private
 
     def handle_activity(activity)
-      motion = create_from_cm_motion_activity(activity)
+      motion = Momo::Motion.create_from_cm_motion_activity(activity)
       @on_motion.call(motion) unless @on_motion.nil?
     end
 
